@@ -1,0 +1,17 @@
+%%create table
+Cancertable = table(data.diagnosis, data.radius_mean, data.texture_mean, data.perimeter_mean, data.area_mean, data.smoothness_mean, data.concavity_mean, data.symmetry_mean);
+%split dataset 80% and 20%
+PD = 0.80;
+cv = cvpartition(size(Cancertable,1),'HoldOut',PD);
+Cancertrain = Cancertable(cv.training,:);
+Cancertest = Cancertable(cv.test,:);
+
+%% three different classification models
+%% test1
+yfit = Fine_KNN_Cancer.predictFcn(Cancertest)
+
+%% test2
+yfit = Quadratic_SVM_Cancer.predictFcn(Cancertest)
+
+%% test3
+yfit = Cubic_SVM_Cancer.predictFcn(Cancertest)
